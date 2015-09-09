@@ -1,0 +1,103 @@
+<section class="u-maincontainer" ng-controller="projectController">
+	<header class="c-header">
+		<div class="c-header__left">
+			<div>
+				<h2><span class="o-projectcolor" style="background-color: {{project.color}};"></span> {{project.name}}</h2>
+			</div>
+			<div>
+				<a class="c-btn c-btn--border c-btn--active c-btn-nomargin" href="#/projects/{{project.id}}">Tasks</a>
+				<a class="c-btn c-btn--border" href="#/projects/{{project.id}}/calendar">Month</a>
+			</div>
+		</div>
+	</header>
+	<header class="c-subheader c-subheader--noborder">
+		<div class="c-subheader__right">
+			<div>
+				<a href="#" class="c-btn" ng-click="resetDays(); $event.preventDefault()">Go today</a>
+				<a href="#" class="c-btn c-btn--full c-btn--full--blue" ng-click="changeDays('prev'); $event.preventDefault()"><</a>
+				<a href="#" class="c-btn c-btn--full c-btn--full--blue" ng-click="changeDays('next'); $event.preventDefault()">></a>
+			</div>
+		</div>
+	</header>
+	<div class="u-posabsolute">
+		<section class="c-mainTop">
+			<div class="u-wrapper o-days">
+				<article ng-repeat="day in days" class="o-day" ng-class="{'o-day--first' : day.isToday}">
+					<div class="o-day__content">
+						<header class="o-day__header">
+							<h3>{{day.date.day}} <span>{{day.date.date}}</span></h3>
+						</header>
+						<ul class="o-todo">
+							<li ng-repeat="task in day.tasks" ng-class="{ 'o-todo__item--done' : task.status == 1 }">
+								<span ng-click="changeTaskStatus(day,$index)" class="o-todo__checkbox" ng-class="{'o-todo__checkbox--checked' : task.status == 1}">
+									<span class="o-todo__checkbox__bar"></span>
+									<span class="o-todo__checkbox__icon"></span>
+								</span>
+								<p class="o-todo__content" html="{{task.name}}"></p>
+								<i class="fa fa-times o-todo__deleteitem" ng-click="deleteTask(day,$index)"></i>
+							</li>
+							<li class="o-todo__add o-input--add" ng-class="{'is-focused' : isFocused[$index] == true}">
+								<i class="fa fa-plus"></i>
+								<input type="text" ng-model="formData.newTask[day.date.datetime]" ng-keyup="$event.keyCode == 13 && addTask(day,day.date.datetime)" ng-focus="isFocused[$index] = true" ng-blur="isFocused[$index] = false">
+							</li>
+ 						</ul>
+					</div>
+				</article>
+			</div>
+		</section>
+		<section class="c-mainBottom">
+			<div class="c-mainBottom__left c-notes">
+				<ul class="c-notes__header">
+					<li ng-repeat="note in notes" ng-class="{'is-selected' : $parent.selectedNote == $index}" ng-click="setSelectedNote($index)">{{note.name}} <a href="#" ng-click="deleteNote(selectedNote); $event.preventDefault()" ng-confirm-click="Are you sure you want ot delete this note ?">x</a></li>
+					<li class="o-input--add" ng-class="{'is-focused' : isFocused['notes'] == true}">
+						<i class="fa fa-plus"></i>
+						<input type="text" ng-model="addNoteName" ng-keyup="$event.keyCode == 13 && addNote()" ng-focus="isFocused['notes'] = true" ng-blur="isFocused['notes'] = false">
+					</li>
+				</ul>
+				<div class="c-notes__content">
+					<textarea ng-model="selectedNoteText" ng-keydown="saveNoteIsVisible = true"></textarea>
+					<a href="#" ng-click="saveNote(selectedNote); $event.preventDefault()" ng-show="saveNoteIsVisible" class="c-btn c-btn--full c-btn--full--blue">Save</a>
+				</div>
+			</div>
+			<div class="c-mainBottom__right c-projectinfos">
+				<ul class="c-projectinfos__data">
+					<!-- <li><span>Date de début :</span> 10/05/2015</li> -->
+					<!-- <li><span>Durée du projet :</span> 1 mois et 2 jours</li> -->
+					<li>
+						<div class="c-projectinfos__datacontainer">
+							<div class="c-projectinfos__datacontent">
+								<h4>{{projectData.showDuration}}</h4>
+								<span>hours on <br/>the projet</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="c-projectinfos__datacontainer">
+							<div class="c-projectinfos__datacontent">
+								<h4>{{projectData.showWorkDurationDays}}</h4>
+								<span>worked days <br/>on the project</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="c-projectinfos__datacontainer">
+							<div class="c-projectinfos__datacontent">
+								<h4>{{projectData.showWorkDurationDays}}</h4>
+								<span>Temps de travail</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="c-projectinfos__datacontainer">
+							<div class="c-projectinfos__datacontent">
+								<h4>{{projectData.showWorkDurationDays}}</h4>
+								<span>Temps de travail</span>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</section>
+	</div>
+
+</section>

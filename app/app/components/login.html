@@ -1,0 +1,27 @@
+<div class="c-login" ng-controller="loginController">
+	<div class="u-valign">
+		<div class="c-login__popup">
+			<header>Login</header>
+			<div class="c-login__content">
+				<form class="c-form" ng-submit="doLogin($event)">
+					<div class="c-form__alert" ng-if="loginForm.alert">
+						<i class="fa fa-exclamation-triangle"></i> {{loginForm.alert}}
+					</div>
+					<div class="c-form__group c-form__group--hasicon">
+						<label>Identifiant</label>
+						<input type="text" ng-model="loginForm.name">
+						<i class="fa fa-user"></i>
+					</div>
+					<div class="c-form__group c-form__group--hasicon">
+						<label>Mot de passe</label>
+						<input type="password" ng-model="loginForm.password">
+						<i class="fa fa-key"></i>
+					</div>
+					<div class="c-form__group c-form__group--nomargin">
+						<input type="submit" value="Connexion">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

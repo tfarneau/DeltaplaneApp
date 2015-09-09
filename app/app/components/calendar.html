@@ -1,0 +1,67 @@
+<section class="u-maincontainer" ng-controller="calendarController">
+	
+	<header class="c-header">
+		<div class="c-header__left">
+
+			<div>
+				<h2 ng-if="stateName != 'mainCalendar'">
+					<span class="o-projectcolor" style="background-color: {{project.color}};"></span>
+					{{project.name}}
+				</h2>
+				<h2 ng-if="stateName == 'mainCalendar'">My calendar</h2>
+			</div>
+			<div class="noborder" ng-if="stateName != 'mainCalendar'">
+				<a class="c-btn c-btn--border c-btn-nomargin" href="#/projects/{{project.id}}">Tasks</a>
+				<a class="c-btn c-btn--border  c-btn--active" href="#/projects/{{project.id}}/calendar">Month</a>
+			</div>
+			<div class="noborder" ng-if="stateName == 'mainCalendar'">
+				<a class="c-btn c-btn--border c-btn-nomargin" href="#/projects">Projects</a>
+				<a class="c-btn c-btn--border c-btn--active" href="#/calendar">Calendar</a>
+			</div>
+
+		</div>
+	</header>
+	<header class="c-subheader c-subheader--noborder">
+		<div class="c-subheader__right">
+			<div>
+				<span class="c-btn c-btn--title">{{month.format("MMMM, YYYY")}}</span>
+				<a href="#" class="c-btn c-btn--full c-btn--full--blue" ng-click="previousMonth(); $event.preventDefault()"><</a>
+				<a href="#" class="c-btn c-btn--full c-btn--full--blue" ng-click="nextMonth(); $event.preventDefault()">></a>
+			</div>
+		</div>
+	</header>
+
+	<div class="u-posabsolute c-mainCalendar">
+
+		<div class="u-wrapper">
+
+			<!-- <div calendar-component selected="day" class="c-calendar"></div> -->
+		
+			<div class="c-calendar">
+				<div class="week names">
+				    <span class="day"><span>Sun</span></span>
+				    <span class="day"><span>Mon</span></span>
+				    <span class="day"><span>Tue</span></span>
+				    <span class="day"><span>Wed</span></span>
+				    <span class="day"><span>Thu</span></span>
+				    <span class="day"><span>Fri</span></span>
+				    <span class="day"><span>Sat</span></span>
+				</div>
+				<div class="week" ng-repeat="week in weeks">
+				    <span class="day" ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected), 'is-task': day.tasks.length > 0}" ng-click="selectDay(day)" ng-repeat="day in week.days" style="background-color: rgba(211,229,240,{{day.opacity}});">
+				    	<!-- <div class="day__indicator" style="background-color:{{day.backgroundColor}}; height:{{day.hoursVal}}%"></div> -->
+				    	<span>
+				    		<div class="daycenter">
+				    			<div class="daycolor">{{day.number}}</div>
+				    			<div class="tasks" ng-if="day.tasks.length > 0" >{{day.tasks.length}} tasks / {{day.hours}}h</div>
+				    		</div>
+				    	</span>
+				    </span>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</section>

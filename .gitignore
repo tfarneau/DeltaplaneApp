@@ -1,0 +1,5 @@
+home/node_modules
+app/node_modules
+app/dist.dev
+app/dist.prod
+api/vendor

@@ -1,0 +1,23 @@
+<header>
+	<a href="#/projects" class="c-header__left">
+		<h1><span>Da</span>Deltaplane.io</h1>
+	</a>
+	<div class="c-header__right">
+		
+	</div>
+</header>
+<aside>
+	<ul class="c-sideprojects">
+		<li class="c-sideproject" ng-repeat="project in projects">
+			<p class="o-projectcolor" style="background-color: {{project.color}};"></p>
+			<a href="#/projects/{{project.id}}">
+				{{project.name}}
+			</a>
+			<div class="u-clear"></div>
+		</li>
+	</ul>
+	<section class="c-userinfos">
+		<span class="c-userinfos__avatar"></span>
+		<span class="c-userinfos__name">Tristan F. <a href="#"><i class="fa fa-cog"></i></a></span>
+	</section>
+</aside>

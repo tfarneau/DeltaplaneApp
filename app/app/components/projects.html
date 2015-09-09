@@ -1,0 +1,91 @@
+<section class="u-maincontainer" ng-controller="projectsController">
+	
+	<div notification-component ng-controller="notificationController"></div>
+	
+	<header class="c-header">
+		<div class="c-header__left">
+			<div>
+				<h2>My deltaplane</h2>
+			</div>
+			<div>
+				<a class="c-btn c-btn--border c-btn--active c-btn-nomargin" href="#/projects">Projects</a>
+				<a class="c-btn c-btn--border" href="#/calendar">Calendar</a>
+			</div>
+		</div>
+	</header>
+	
+	<div class="u-posabsolute c-mainProjects">
+
+		<div class="u-wrapper">
+			<div class="o-today">
+				<div class="o-today__content">
+					<h3 class="o-title--modal">Todo today <span>({{hoursOverdue}}h overdue)</span></h3>
+					<ul class="o-todo" ng-repeat="project in projectTasks track by $index">
+						<li class="o-todo__project">
+							<h4>{{project.name}}</h4>
+						</li>
+						
+						<li ng-repeat="task in project.tasks" ng-class="{'o-todo__overdue' : task.difference > 0, 'o-todo__item--done' : task.status == 1}">
+							<span class="o-todo__checkbox" ng-class="{'o-todo__checkbox--checked' : task.status == 1}" ng-click="changeTaskStatus($parent.$index,$index)">
+								<span class="o-todo__checkbox__bar"></span>
+								<span class="o-todo__checkbox__icon"></span>
+							</span>
+							<p class="o-todo__content">{{task.name}} <span ng-if="task.difference > 0">({{task.difference}} days ago)</span></p>
+							<i class="fa fa-times o-todo__deleteitem" ng-click="deleteTask($parent.$index,$index)"></i>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="o-projects">
+				
+				<a href="#/projects/{{project.id}}" class="o-projects__item" ng-repeat="project in projects">
+					<div class="o-projects__itemcontent">
+
+						<h3 class="o-title--modal"><p class="o-projectcolor" style="background-color: {{project.color}};"></p>{{project.name}}</h3>
+						<p class="o-projects__budget"><i class="fa fa fa-money"></i> {{project.budget}}$</p>
+						<p class="o-projects__productivity"><i class="fa fa-clock-o"></i> ~ {{ (project.budget / ((project.meta_hours_done+project.meta_hours_left)/24/(1/3))) | number:0 }}$ / day</p>
+						<p class="o-projects__hoursdone"><i class="fa fa-hourglass-end"></i> {{project.meta_hours_done}} hours done</p>
+						<p class="o-projects__hoursleft"><i class="fa fa-hourglass-start"></i>  {{project.meta_hours_left}} hours left</p>
+						<!-- <p>Status</p> -->
+
+						<div ng-click="deleteProject($index); $event.preventDefault()" class="o-projects__itemdelete" ng-confirm-click="Are you sure you want ot delete this project ?"><i class="fa fa-times"></i></div>
+
+					</div>
+				</a>
+
+				<div class="o-projects__item">
+					<div class="o-projects__itemcontent o-projects__itemcontent--add">
+						<form action="#" ng-submit="addProject(); $event.preventDefault()" class="c-form">
+							<div class="c-form__group">
+								<input type="text" ng-model="formData.projectName" placeholder="Project name">
+							</div>
+							<div class="c-form__group">
+								<input type="text" ng-model="formData.projectBudget" placeholder="Project budget">
+							</div>
+							<div class="c-form__group">
+								<select ng-model="formData.projectColor">
+								  <option value="" disabled>Project color</option>
+								  <option value="#1abc9c">Turquoise</option>
+								  <option value="#2ecc71">Emerald</option>
+								  <option value="#3498db">Blue</option>
+								  <option value="#9b59b6">Purple</option>
+								  <option value="#34495e">Asphalt</option>
+								  <option value="#f1c40f">Yellow</option>
+								  <option value="#e67e22">Carrot</option>
+								  <option value="#e74c3c">Red</option>
+								  <option value="#95a5a6">Concrete</option>
+								  <option value="#bdc3c7">Silver</option>
+								</select>
+							</div>
+							<div class="c-form__group">
+								<input type="submit" value="Add project">
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</section>
